@@ -346,6 +346,16 @@ func parseDateTime64Prec(s string) int {
 	if s == "" {
 		return 0
 	}
+
+	// DateTime64 type definitions syntax is
+	// DateTime64(precision, [timezone])
+	// So we need to split by comma and take the first part
+	// to get the precision.
+	// Examples:
+	// DateTime64(3, 'Asia/Bangkok')
+	// DateTime64(3)
+	s = strings.Split(s, ",")[0]
+
 	prec, err := strconv.Atoi(s)
 	if err != nil {
 		return 0
